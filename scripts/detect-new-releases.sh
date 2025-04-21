@@ -43,10 +43,10 @@ if [[ "${ALL_SUPPORTED}" = true ]]; then
     exit 0
 fi
 
-printf 'has-new-releases=true\n' >> "${GITHUB_OUTPUT}"
+printf 'has-new-releases=true\n' >>"${GITHUB_OUTPUT}"
 warn " ⚠️ There is some unsupported versions, which is either new releases, or just released that is not implemented by @mojisdev"
 warn " ⚠️ Please check the following versions:"
 for version in "${UNSUPPORTED_VERSIONS[@]}"; do
     warn " ⚠️ ${version}"
 done
-printf 'unsupported_versions=%s\n' "${UNSUPPORTED_VERSIONS[*]}" >> "${GITHUB_OUTPUT}"
+printf 'unsupported_versions=%s\n' "${UNSUPPORTED_VERSIONS[*]}" >>"${GITHUB_OUTPUT}"

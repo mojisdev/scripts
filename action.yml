@@ -1,0 +1,26 @@
+name: Mojis Scripts
+description: GitHub Action for running internal mojis script
+
+inputs:
+  script:
+    description: "The script to run, e.g. 'detect-new-releases'"
+    required: true
+
+# Note:
+# - inputs.* should be manually mapped to INPUT_* due to https://github.com/actions/runner/issues/665
+# - Use GITHUB_*/RUNNER_* instead of github.*/runner.* due to https://github.com/actions/runner/issues/2185
+runs:
+  using: composite
+  steps:
+    - id: sanitize script name
+      shell: bash
+      env:
+        INPUT_SCRIPT: ${{ inputs.script }}
+      run: |
+        # sanitize the script name
+        if [[ ! "${INPUT_SCRIPT}" =~ ^[a-zA-Z0-9_-]+$ ]]; then
+          echo "invalid script name: ${INPUT_SCRIPT}"
+          exit 1
+        fi
+
+        bash --noprofile --norc "${GITHUB_ACTION_PATH:?}/setup.sh"

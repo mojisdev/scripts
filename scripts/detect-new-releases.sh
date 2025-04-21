@@ -1,36 +1,15 @@
 #!/bin/bash
 
-bail() {
-  if [[ -n "${GITHUB_ACTIONS:-}" ]]; then
-    printf '::error::%s\n' "$*"
-  else
-    printf >&2 'error: %s\n' "$*"
-  fi
-  exit 1
-}
-warn() {
-  if [[ -n "${GITHUB_ACTIONS:-}" ]]; then
-    printf '::warning::%s\n' "$*"
-  else
-    printf >&2 'warning: %s\n' "$*"
-  fi
-}
-info() {
-  printf >&2 'info: %s\n' "$*"
-}
-
-# function to check if jq is installed
-check_jq() {
-    if ! command -v jq &> /dev/null; then
-        echo "Error: jq is not installed. Please install jq to run this script."
-        exit 1
-    fi
-}
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+source "${SCRIPT_DIR}/utils.sh"
 
 # check for jq
 check_jq
 
-BASE_URL="${INPUT_MOJIS_BASE_URL:-https://mojis.dev}"
+BASE_URL="${INPUT_MOJIS_API_BASE_URL:-"https://api.mojis.dev"}"
+
+info "🔍 checking for new releases"
+info "🔗 base url: ${BASE_URL}"
 
 # fetch the supported versions
 if ! SUPPORTED_VERSIONS=$(curl -s "${BASE_URL}/api/v1/versions/supported"); then

@@ -6,9 +6,9 @@ inputs:
     description: "The script to run, e.g. 'detect-new-releases'"
     required: true
 
-  mojis_base_url:
-    description: "The base URL for mojis, e.g. 'https://mojis.dev'"
-    default: "https://mojis.dev"
+  mojis_api_base_url:
+    description: "The base URL for mojis, e.g. 'https://api.mojis.dev'"
+    default: "https://api.mojis.dev"
     required: true
 
 # Note:
@@ -21,7 +21,7 @@ runs:
       shell: bash
       env:
         INPUT_SCRIPT: ${{ inputs.script }}
-        INPUT_MOJIS_BASE_URL: ${{ inputs.mojis_base_url }}
+        INPUT_MOJIS_API_BASE_URL: ${{ inputs.mojis_api_base_url }}
       run: |
         # sanitize the script name
         if [[ ! "${INPUT_SCRIPT}" =~ ^[a-zA-Z0-9_-]+$ ]]; then

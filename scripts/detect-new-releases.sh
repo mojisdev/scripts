@@ -32,7 +32,7 @@ while IFS= read -r version; do
     # shellcheck disable=SC2250
     if ! echo "${SUPPORTED_VERSIONS}" | jq -e "contains([\"$version\"])" > /dev/null; then
         # shellcheck disable=SC2250
-        echo "Missing support for emoji version: $version"
+        UNSUPPORTED_VERSIONS+=("$version")
         ALL_SUPPORTED=false
     fi
 done <<< "${EMOJI_VERSIONS}"
@@ -43,4 +43,8 @@ if [[ "${ALL_SUPPORTED}" = true ]]; then
     exit 0
 fi
 
-warn "❗️ not all versions are supported, please check the output above"
+printf 'has-new-releases=true\n' >> "${GITHUB_OUTPUT}"
+warn " ⚠️ There is some unsupported versions, which is either new releases, or just released that is not implemented by @mojis"
+warn " ⚠️ Please check the following versions:"
+# save the unsupported versions to the GITHUB_OUTPUT
+printf 'unsupported_versions=%s\n' "${UNSUPPORTED_VERSIONS[*]}" >> "${GITHUB_OUTPUT}"

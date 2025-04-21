@@ -12,7 +12,7 @@ inputs:
 runs:
   using: composite
   steps:
-    - id: sanitize script name
+    - name: "setup mojis scripts"
       shell: bash
       env:
         INPUT_SCRIPT: ${{ inputs.script }}

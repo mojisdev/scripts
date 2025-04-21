@@ -3,8 +3,6 @@
 set -CeEuo pipefail
 IFS=$'\n\t'
 
-INPUT_SCRIPT="$1"
-
 # list of allowed script names
 ALLOWED_SCRIPTS=(
   "detect-new-releases"

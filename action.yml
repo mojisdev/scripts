@@ -6,6 +6,11 @@ inputs:
     description: "The script to run, e.g. 'detect-new-releases'"
     required: true
 
+  mojis_base_url:
+    description: "The base URL for mojis, e.g. 'https://mojis.dev'"
+    default: "https://mojis.dev"
+    required: true
+
 # Note:
 # - inputs.* should be manually mapped to INPUT_* due to https://github.com/actions/runner/issues/665
 # - Use GITHUB_*/RUNNER_* instead of github.*/runner.* due to https://github.com/actions/runner/issues/2185
@@ -16,6 +21,7 @@ runs:
       shell: bash
       env:
         INPUT_SCRIPT: ${{ inputs.script }}
+        INPUT_MOJIS_BASE_URL: ${{ inputs.mojis_base_url }}
       run: |
         # sanitize the script name
         if [[ ! "${INPUT_SCRIPT}" =~ ^[a-zA-Z0-9_-]+$ ]]; then

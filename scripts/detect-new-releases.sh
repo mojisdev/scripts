@@ -30,13 +30,15 @@ check_jq() {
 # check for jq
 check_jq
 
+BASE_URL="${INPUT_MOJIS_BASE_URL:-https://mojis.dev}"
+
 # fetch the supported versions
-if ! SUPPORTED_VERSIONS=$(curl -s "http://localhost:8787/api/v1/versions/supported"); then
+if ! SUPPORTED_VERSIONS=$(curl -s "${BASE_URL}/api/v1/versions/supported"); then
     bail "failed to fetch supported versions"
 fi
 
 # fetch all versions
-if ! ALL_VERSIONS=$(curl -s "http://localhost:8787/api/v1/versions?draft=true"); then
+if ! ALL_VERSIONS=$(curl -s "${BASE_URL}/api/v1/versions?draft=true"); then
     bail "failed to fetch all versions"
 fi
 

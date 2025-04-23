@@ -1,5 +1,5 @@
-name: Mojis Scripts
-description: GitHub Action for running internal mojis script
+name: Detect New Releases | Mojis Scripts
+description: Detect New Emoji Releases
 
 inputs:
   script:
@@ -30,7 +30,6 @@ runs:
       id: mojis
       shell: bash
       env:
-        INPUT_SCRIPT: ${{ inputs.script }}
         INPUT_MOJIS_API_BASE_URL: ${{ inputs.mojis_api_base_url }}
       run: |
         # sanitize the script name
@@ -40,3 +39,4 @@ runs:
         fi
 
         bash --noprofile --norc "${GITHUB_ACTION_PATH:?}/setup.sh"
+        base "${GITHUB_ACTION_PATH:?}/detect-new-releases.sh"

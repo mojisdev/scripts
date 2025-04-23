@@ -28,4 +28,4 @@ runs:
       env:
         INPUT_MOJIS_API_BASE_URL: ${{ inputs.mojis_api_base_url }}
       run: |
-        base "${GITHUB_ACTION_PATH:?}/detect-new-releases.sh"
+        bash "${GITHUB_ACTION_PATH:?}/detect-new-releases.sh"

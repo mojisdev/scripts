@@ -1,5 +1,5 @@
-name: Detect New Releases | Mojis Scripts
-description: Detect New Emoji Releases
+name: Test Action | Mojis Scripts
+description: Test Action for Mojis Scripts
 
 inputs:
   mojis_api_base_url:
@@ -28,4 +28,4 @@ runs:
       env:
         INPUT_MOJIS_API_BASE_URL: ${{ inputs.mojis_api_base_url }}
       run: |
-        base "${GITHUB_ACTION_PATH:?}/detect-new-releases.sh"
+        echo "Hello World!"

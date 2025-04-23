@@ -1,0 +1,31 @@
+name: Detect New Releases | Mojis Scripts
+description: Detect New Emoji Releases
+
+inputs:
+  mojis_api_base_url:
+    description: "The base URL for mojis, e.g. 'https://api.mojis.dev'"
+    default: "https://api.mojis.dev"
+    required: true
+
+outputs:
+  has_new_releases:
+    description: "Whether the `detect-new-releases` found new releases"
+    value: ${{ steps.mojis.outputs.has_new_releases }}
+
+  unsupported_versions:
+    description: "The unsupported versions found by `detect-new-releases`"
+    value: ${{ steps.mojis.outputs.unsupported_versions }}
+
+# Note:
+# - inputs.* should be manually mapped to INPUT_* due to https://github.com/actions/runner/issues/665
+# - Use GITHUB_*/RUNNER_* instead of github.*/runner.* due to https://github.com/actions/runner/issues/2185
+runs:
+  using: composite
+  steps:
+    - name: "setup mojis scripts"
+      id: mojis
+      shell: bash
+      env:
+        INPUT_MOJIS_API_BASE_URL: ${{ inputs.mojis_api_base_url }}
+      run: |
+        bash "${GITHUB_ACTION_PATH:?}/detect-new-releases.sh"

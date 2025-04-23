@@ -1,11 +1,7 @@
-name: Mojis Scripts
-description: GitHub Action for running internal mojis script
+name: Test Action | Mojis Scripts
+description: Test Action for Mojis Scripts
 
 inputs:
-  script:
-    description: "The script to run, e.g. 'detect-new-releases'"
-    required: true
-
   mojis_api_base_url:
     description: "The base URL for mojis, e.g. 'https://api.mojis.dev'"
     default: "https://api.mojis.dev"
@@ -30,13 +26,6 @@ runs:
       id: mojis
       shell: bash
       env:
-        INPUT_SCRIPT: ${{ inputs.script }}
         INPUT_MOJIS_API_BASE_URL: ${{ inputs.mojis_api_base_url }}
       run: |
-        # sanitize the script name
-        if [[ ! "${INPUT_SCRIPT}" =~ ^[a-zA-Z0-9_-]+$ ]]; then
-          echo "invalid script name: ${INPUT_SCRIPT}"
-          exit 1
-        fi
-
-        bash --noprofile --norc "${GITHUB_ACTION_PATH:?}/setup.sh"
+        echo "Hello World!"
